@@ -78,10 +78,7 @@ class LaravelMatomoTracker extends MatomoTracker
         $this->localSecond = false;
         $this->idPageview = false;
 
-        // $this->idSite = $this->idSite;
-        $this->urlReferrer = !empty($request->server('HTTP_REFERER')) ? $request->server('HTTP_REFERER') : false;
         $this->pageCharset = self::DEFAULT_CHARSET_PARAMETER_VALUES;
-        $this->pageUrl = self::getCurrentUrl();
         $this->ip = !empty($request->server('REMOTE_ADDR')) ? $request->server('REMOTE_ADDR') : false;
         $this->acceptLanguage = !empty($request->server('HTTP_ACCEPT_LANGUAGE')) ? $request->server('HTTP_ACCEPT_LANGUAGE') : false;
         $this->userAgent = !empty($request->server('HTTP_USER_AGENT')) ? $request->server('HTTP_USER_AGENT') : false;
@@ -111,7 +108,6 @@ class LaravelMatomoTracker extends MatomoTracker
         $this->configCookieSecure = false;
         $this->configCookieHTTPOnly = false;
 
-        $this->currentTs = time();
         $this->createTs = $this->currentTs;
         $this->visitCount = 0;
         $this->currentVisitTs = false;
@@ -129,6 +125,10 @@ class LaravelMatomoTracker extends MatomoTracker
 
         $this->outgoingTrackerCookies = array();
         $this->incomingTrackerCookies = array();
+
+        $this->urlReferrer = $request->trackingData('urlReferrer')?? false;
+        $this->pageUrl = $request->trackingData('url')?? '';
+        $this->currentTs = $request->trackingData('url')??time();
     }
 
     /**

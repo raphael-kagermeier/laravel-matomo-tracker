@@ -24,6 +24,20 @@ class LaravelMatomoTrackerServiceProvider extends ServiceProvider
         if ($this->app->runningInConsole()) {
             $this->bootForConsole();
         }
+
+        // a convenient macro to access the tracking data stored in session
+        Request::macro('trackingData', function(string $key = null, $value = null){
+            // session key
+            $session_key = 'tracking_data';
+            $session_key .= $key ? '.'.$key:'';
+
+            // if value is given update - else get data
+            if($value) {
+                $this->session()->put($session_key,$value );
+            }else{
+                return $this->session()->get($session_key);
+            }
+        });
     }
 
     /**

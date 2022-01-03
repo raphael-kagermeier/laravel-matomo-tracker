@@ -26,4 +26,17 @@ return [
      * Optionally set a custom queue connection. Laravel defaults to "sync".
      */
     'queueConnection' => env('MATOMO_QUEUE_CONNECTION', 'default'),
+
+    /**
+     * Exclude urls from being tracked
+     */
+    'excluded_uris' => [
+        'livewire/message',
+        'phpunit',
+    ],
+
+    /**
+     * session base path
+     */
+    'session_base' => 'trackingData',
 ];
