@@ -81,5 +81,9 @@ class LaravelMatomoTrackerServiceProvider extends ServiceProvider
         $this->publishes([
             __DIR__ . '/../config/matomotracker.php' => config_path('matomotracker.php'),
         ], 'matomotracker.config');
+
+        $this->publishes([
+            __DIR__ . './MatomoTrackerMiddleware.php' => base_path('app/')
+        ]);
     }
 }

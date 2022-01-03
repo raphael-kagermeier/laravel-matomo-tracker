@@ -108,7 +108,6 @@ class LaravelMatomoTracker extends MatomoTracker
         $this->configCookieSecure = false;
         $this->configCookieHTTPOnly = false;
 
-        $this->createTs = $this->currentTs;
         $this->visitCount = 0;
         $this->currentVisitTs = false;
         $this->lastVisitTs = false;
@@ -128,7 +127,9 @@ class LaravelMatomoTracker extends MatomoTracker
 
         $this->urlReferrer = $request->trackingData('urlReferrer')?? false;
         $this->pageUrl = $request->trackingData('url')?? '';
-        $this->currentTs = $request->trackingData('url')??time();
+        $this->currentTs = $request->trackingData('currentTs')??time();
+        $this->createTs = (int)$this->currentTs;
+
     }
 
     /**
